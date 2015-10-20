@@ -23,7 +23,7 @@ September 2015
 
 ## page view with map
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/(images/page view with map.PNG)
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/page view with map.PNG)
 
 
 ## kml report
