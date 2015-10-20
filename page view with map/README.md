@@ -8,7 +8,7 @@ As with any page view, to use this create a new report of type **XSLT report**, 
 
 In everyday use the first time you run it it will take a few seconds to get the supporting things for the map.
 
-![page view with map](pageview.png)
+![page view with map](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/page%20view%20with%20map.PNG)
 
 The general structure is
 
