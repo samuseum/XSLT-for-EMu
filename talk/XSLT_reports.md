@@ -1,57 +1,59 @@
-% XSLT reports
-% Keith Maguire - South Australian Museum
-% September 2015
+# XSLT reports
+
+Keith Maguire - South Australian Museum
+
+September 2015
 
 
-# Excel report with choices
+## Excel report with choices
 
-![](images\excel report with tissues.PNG)
-
-
-# Excel report with data manipulation
-
-![](images\arachnology label report.PNG)
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/excel report with tissues.PNG)
 
 
+## Excel report with data manipulation
 
-# CSV import report
-
-![](images\csv import report.PNG)
-
-
-# page view with map
-
-![](images\page view with map.PNG)
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/arachnology label report.PNG)
 
 
-# kml report
 
-![](images\kml report.PNG)
+## CSV import report
 
-
-# species occurrence report
-
-![](images\species occurrence report.PNG)
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/csv import report.PNG)
 
 
-# zoomable map with overlays
+## page view with map
 
-![](images\multi point map report.PNG)
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/(images/page view with map.PNG)
 
 
-# XSLT
+## kml report
+
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/kml report.PNG)
+
+
+## species occurrence report
+
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/species occurrence report.PNG)
+
+
+## zoomable map with overlays
+
+![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/multi point map report.PNG)
+
+
+## XSLT
 
 e**X**tensible  **S**tylesheet **L**anguage **T**ransformations
 
 
 
-# XSLT
+## XSLT
 
 XML+XSLT >processor> output
 
 
 
-# Original XML 
+## Original XML 
 
 
 ~~~~~~~~~~ {.xml}
@@ -66,7 +68,7 @@ XML+XSLT >processor> output
 ~~~~~~~~~~~~~~
 
 
-# to XML
+## to XML
 
 ~~~~~~~~~~ {.xml}
 <record>
@@ -80,14 +82,14 @@ XML+XSLT >processor> output
 
 ~~~~~~~~~~~~~~
 
-# to text
+## to text
 
     prefix, regno, collection, identification, location
     A     , 1234 , Entomology, Camponotus    , Australia
 
 
 
-# to HTML
+## to HTML
 
 ~~~~~~~~~~~~~{.html}
 
@@ -102,7 +104,7 @@ XML+XSLT >processor> output
 <p><em>Camponotus from australia</em></p>
 
 
-# Why use XSLT with EMu?
+## Why use XSLT with EMu?
 
 + Already built into EMu
 + XML is the default output
@@ -111,7 +113,7 @@ XML+XSLT >processor> output
 + Old - lots of support on internet!
 
 
-# Cons
+## Cons
 
 + initially confusing
     + Verbose at some times
@@ -122,14 +124,14 @@ XML+XSLT >processor> output
     + no error messages
 
 
-# XSLT
+## XSLT
 
 ![](images\xsl example.PNG)
 
 
 
 
-# Reporting
+## Reporting
 
 Create XSL report with required fields
 
@@ -137,14 +139,14 @@ Upload the XSLT file
 
 Run the report
 
-# Testing / admin
+## Testing / admin
 
 Generate XML report with required fields
 
 Run transform on computer
 
 
-# EMu XML 
+## EMu XML 
 
 ~~~{.xml}
 <stuff />               # XML stuff
@@ -165,7 +167,7 @@ Run transform on computer
 </table>
 ~~~~~~~~
 
-# General structure of XSLT report file
+## General structure of XSLT report file
 
 ~~~~~~~~~~~~~{.xml}
 
@@ -181,9 +183,9 @@ Run transform on computer
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Text files
+## Text files
 
-# CSV file
+## CSV file
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~{.xml}
@@ -202,7 +204,7 @@ Run transform on computer
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# CSV import file
+## CSV import file
 
 ~~~~~~~~~~~~~{.xml}
 
@@ -222,17 +224,17 @@ Run transform on computer
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# csv import report
+## csv import report
 
 ![](images\csv import report.PNG)
 
 
 
-# XML files
+## XML files
 
 
 
-# XML imports
+## XML imports
 
 ~~~~~~~~~~~~~{.xml}
 
@@ -257,7 +259,7 @@ Run transform on computer
 
 
 
-# KML XML file
+## KML XML file
 
 
 ~~~~~~~~~~~~~{.xml}
@@ -280,7 +282,7 @@ Run transform on computer
 
 
 
-# Sneaky trick for KML
+## Sneaky trick for KML
 
 (This is invalid XSL)
 
@@ -292,12 +294,12 @@ output = filename.kml
 
 
 
-# kml report
+## kml report
 
 ![](images\kml report.PNG)
 
 
-# Excel XML
+## Excel XML
 
 Speadsheet ML
 
@@ -309,7 +311,7 @@ Speadsheet ML
 
 (Remove items until failure)
 
-# Excel XML report
+## Excel XML report
 
 ~~~~~~~~~~~~~{.xml}
 
@@ -326,7 +328,7 @@ Speadsheet ML
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Excel with choices
+## Excel with choices
 
 ~~~~~~{.xml}
 <choose>
@@ -341,12 +343,12 @@ Speadsheet ML
 ~~~~~~~~~~
 
 
-# Excel with choices
+## Excel with choices
 
 ![](images\excel report with tissues.PNG)
 
 
-# Excel with data manipulation
+## Excel with data manipulation
 
 ~~~~~~{.xml}
 
@@ -366,23 +368,23 @@ Speadsheet ML
 </template>
 ~~~~~~~~~~~~~~~~~~~~~~
 
-# Excel report with data manipulation
+## Excel report with data manipulation
 
 ![](images\arachnology label report.PNG)
 
 
 
-# HTML files
+## HTML files
 
-## + javascript
+### + javascript
 
-# Default Page view 
+## Default Page view 
 
 ![default page view](images\default page view.PNG)
 
 
 
-# Page view with map
+## Page view with map
 
 ~~~~~~~{.xml}
 
@@ -407,20 +409,20 @@ Speadsheet ML
 
 
 
-# Page view with map
+## Page view with map
 
 ![page view with map](images\page view with map.PNG)
 
 
 
-# Javascript libraries
+## Javascript libraries
 
-## D3.js
+### D3.js
 
-## Leaflet
+### Leaflet
 
 
-# turn data into JSON
+## turn data into JSON
 
 ~~~~~~~~{.json}
  var datapointsjson = { "type": "FeatureCollection",
@@ -438,7 +440,7 @@ Speadsheet ML
 
 
 
-# Species occurrence report
+## Species occurrence report
 
 ~~~~~~~~~~~~~{.xml}
     <HTML>
@@ -462,11 +464,11 @@ Speadsheet ML
 
 
 
-# species occurrence report
+## species occurrence report
 
 ![](images\species occurrence report.PNG)
 
-# WMS and Leaflet
+## WMS and Leaflet
 
 Leaflet = google-maps style maps
 
@@ -476,7 +478,7 @@ WMS = base maps & overlays
 + Geoscience Australia 
 + etc
 
-# Zoomable map report
+## Zoomable map report
 
 ~~~~~~~~~~~~~{.xml}
 
@@ -498,13 +500,13 @@ WMS = base maps & overlays
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# zoomable map with overlays
+## zoomable map with overlays
 
 ![](images\multi point map report.PNG)
 
 
 
-# required software
+## required software
 
 + text editor
     + Notepad++ / oXygen
@@ -513,7 +515,7 @@ WMS = base maps & overlays
 + shell
     + Command Prompt / cygwin
 
-# Examples
+## Examples
 
 (in a few days)
 
