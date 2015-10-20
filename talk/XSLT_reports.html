@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Keith Maguire - South Australian Museum" />
+  <title>XSLT reports</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">XSLT reports</h1>
+<h2 class="author">Keith Maguire - South Australian Museum</h2>
+</div>
+<p><img src="images/SAM_GOV_HZ_BLK_Web.jpg" alt="South Australian Museum logo" /> % September 2015 ----------------------</p>
+<screenshot of Excel report />
+
+<hr />
+<screenshot of csv report />
+
+
+<hr />
+<screenshot of pageview with map
+
+-----------------
+
+<screenshot of kml report>
+
+<hr />
+<p>screenshot of species occurrence report</p>
+<hr />
+<p>screenshot of map with clustered points</p>
+<hr />
+<p>screenshot of XSLT</p>
+<hr />
+<h1 id="xslt">XSLT</h1>
+<p>E<strong>x</strong>tensible <strong>S</strong>tylesheet <strong>L</strong>anguage <strong>T</strong>ransformations</p>
+<p>Transforms an XML file into a different file</p>
+<hr />
+<h1 id="xml">XML</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;specimen&gt;</span>
+    <span class="kw">&lt;prefix&gt;</span>I<span class="kw">&lt;/material&gt;</span>
+    <span class="kw">&lt;regno&gt;</span>1234<span class="kw">&lt;/colour&gt;</span>
+    <span class="kw">&lt;collection&gt;</span>Entomology<span class="kw">&lt;/texture&gt;</span>
+    <span class="kw">&lt;identification&gt;</span>Camponotus<span class="kw">&lt;/identification&gt;</span>
+    <span class="kw">&lt;location&gt;</span>Australia<span class="kw">&lt;/location&gt;</span>
+<span class="kw">&lt;/specimen&gt;</span></code></pre>
+<hr />
+<h1 id="xml---xml">XML -&gt; XML</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;specimen&gt;</span>
+    <span class="kw">&lt;prefix&gt;</span>I<span class="kw">&lt;/material&gt;</span>
+    <span class="kw">&lt;regno&gt;</span>1234<span class="kw">&lt;/colour&gt;</span>
+    <span class="kw">&lt;collection&gt;</span>Entomology<span class="kw">&lt;/texture&gt;</span>
+    <span class="kw">&lt;identification&gt;</span>Camponotus<span class="kw">&lt;/identification&gt;</span>
+    <span class="kw">&lt;location&gt;</span>Australia<span class="kw">&lt;/location&gt;</span>
+<span class="kw">&lt;/specimen&gt;</span></code></pre>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;record&gt;</span>
+    <span class="kw">&lt;entomology&gt;</span>
+        <span class="kw">&lt;type&gt;</span>specimen<span class="kw">&lt;/type&gt;</span>
+        <span class="kw">&lt;registration&gt;</span>I1234<span class="kw">&lt;registration&gt;</span>
+        <span class="kw">&lt;id&gt;</span>Camponotus<span class="kw">&lt;/id&gt;</span>
+        <span class="kw">&lt;collected&gt;</span>Australia<span class="kw">&lt;/collected&gt;</span>
+    <span class="kw">&lt;/entomology&gt;</span>
+<span class="kw">&lt;/record&gt;</span></code></pre>
+<h2 id="section">~</h2>
+<h1 id="xml---text">XML -&gt; text</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;specimen&gt;</span>
+    <span class="kw">&lt;prefix&gt;</span>I<span class="kw">&lt;/material&gt;</span>
+    <span class="kw">&lt;regno&gt;</span>1234<span class="kw">&lt;/colour&gt;</span>
+    <span class="kw">&lt;collection&gt;</span>Entomology<span class="kw">&lt;/texture&gt;</span>
+    <span class="kw">&lt;identification&gt;</span>Camponotus<span class="kw">&lt;/identification&gt;</span>
+    <span class="kw">&lt;location&gt;</span>Australia<span class="kw">&lt;/location&gt;</span>
+<span class="kw">&lt;/specimen&gt;</span></code></pre>
+<pre><code>prefix, regno, collection, identification, location
+i     , 1234 , Entomology, Camponotus    , Australia</code></pre>
+<hr />
+<h1 id="xml---html">XML -&gt; HTML</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;specimen&gt;</span>
+    <span class="kw">&lt;prefix&gt;</span>I<span class="kw">&lt;/material&gt;</span>
+    <span class="kw">&lt;regno&gt;</span>1234<span class="kw">&lt;/colour&gt;</span>
+    <span class="kw">&lt;collection&gt;</span>Entomology<span class="kw">&lt;/texture&gt;</span>
+    <span class="kw">&lt;identification&gt;</span>Camponotus<span class="kw">&lt;/identification&gt;</span>
+    <span class="kw">&lt;location&gt;</span>Australia<span class="kw">&lt;/location&gt;</span>
+<span class="kw">&lt;/specimen&gt;</span></code></pre>
+<h2>
+Entomology
+</h2>
+<h3>
+I1234
+</h3>
+<p>
+<em>Camponotus from australia</em>
+</p>
+
+
+
+<hr />
+<h1 id="pros">Pros</h1>
+<ul>
+<li>Already built into EMu</li>
+<li>Old - lots of support on internet!</li>
+<li>Extremely varied output</li>
+</ul>
+<hr />
+<h1 id="cons">Cons</h1>
+<ul>
+<li>initially confusing
+<ul>
+<li>Verbose at some times</li>
+<li>Terse at others</li>
+</ul></li>
+<li>useless error messages from built-in processor</li>
+<li>Can get slow &gt; c.50,000 bits of data
+<ul>
+<li>(5,000 records with 10 fields)</li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="emu-xml">EMu XML</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml">
+<span class="kw">&lt;stuff</span> <span class="kw">/&gt;</span>               # XML stuff
+    
+<span class="kw">&lt;table&gt;</span>                 # Module name
+
+    <span class="kw">&lt;tuple</span> <span class="kw">&gt;</span>            # One for each record 
+        <span class="kw">&lt;atom/&gt;</span>
+        <span class="kw">&lt;tuple&gt;</span>         # all
+            <span class="kw">&lt;atom</span> <span class="kw">/&gt;</span>    # the
+        <span class="kw">&lt;/tuple&gt;</span>        # fields
+        <span class="kw">&lt;table&gt;</span>         # in 
+            <span class="kw">&lt;atom</span> <span class="kw">/&gt;</span>    # the 
+            <span class="kw">&lt;tuple</span> <span class="kw">/&gt;</span>   # report
+          [...]  
+    <span class="kw">&lt;/tuple&gt;</span>
+    <span class="kw">&lt;tuple&gt;</span>[...]<span class="kw">&lt;/tuple&gt;</span># next record
+    <span class="kw">&lt;tuple&gt;</span>[...]<span class="kw">&lt;/tuple&gt;</span># next record
+    <span class="kw">&lt;tuple&gt;</span>[...]<span class="kw">&lt;/tuple&gt;</span># next record
+<span class="kw">&lt;/table&gt;</span></code></pre>
+<hr />
+<h1 id="general-structure-of-xslt-report-file">General structure of XSLT report file</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;stylesheet&gt;</span>
+   
+    <span class="kw">&lt;Output_file&gt;</span> specified file type XML/HTML/text
+
+      - CSV headers, HTML, XML, javascript etc.
+        
+        <span class="kw">&lt;xsl:apply-templates</span><span class="ot"> select=</span><span class="st">&quot;/table/tuple&quot;</span> <span class="kw">/&gt;</span>
+        
+      - Anything else required for the output
+
+    <span class="kw">&lt;/Output_file&gt;</span>
+
+    <span class="kw">&lt;xsl:template&gt;</span>
+        The output for a single record
+    <span class="kw">&lt;/xsl:template&gt;</span>
+
+<span class="kw">&lt;/stylesheet&gt;</span></code></pre>
+<hr />
+<h1 id="csv-file">CSV file</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;stylesheet&gt;</span>
+
+    <span class="kw">&lt;Output_file&gt;</span> is a text file
+
+       &quot;field 1&quot;, &quot;field 2&quot;, &quot;field 3&quot;
+
+        <span class="kw">&lt;xsl:apply-templates</span><span class="ot"> select=</span><span class="st">&quot;/table/tuple&quot;</span> <span class="kw">/&gt;</span>
+    
+    <span class="kw">&lt;/Output_file&gt;</span>
+
+    <span class="kw">&lt;xsl:template</span> <span class="kw">&gt;</span>
+        field 1, field 2, field 3
+    <span class="kw">&lt;/xsl:template&gt;</span>
+
+<span class="kw">&lt;/stylesheet&gt;</span></code></pre>
+<hr />
+<h1 id="kml-xml-file">KML XML file</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml">
+<span class="kw">&lt;stylesheet&gt;</span>
+   
+    <span class="kw">&lt;Output_file&gt;</span> is an XML file
+
+        KML stuff
+
+        Style choices
+
+        <span class="kw">&lt;xsl:apply-templates</span><span class="ot"> select=</span><span class="st">&quot;/table/tuple&quot;</span> <span class="kw">/&gt;</span>
+        
+        more KML stuff
+
+    <span class="kw">&lt;/Output_file&gt;</span>
+
+    <span class="kw">&lt;xsl:template&gt;</span>
+         XML for each record
+            if coordinates: style 1
+            if no-coordinates: style 2
+            if no locality: style 3
+    <span class="kw">&lt;/xsl:template&gt;</span>
+
+<span class="kw">&lt;/stylesheet&gt;</span></code></pre>
+<pre><code>
+------------------------------
+
+
+# Excel XML file
+
+~~~~~~~~~~~~~{.xml}
+&lt;stylesheet&gt;
+   
+    &lt;Output_file&gt; is an XML file
+                  open with Excel
+
+      - Excel XML stuff
+      - Headers in XML form
+        
+        &lt;xsl:apply-templates select=&quot;/table/tuple&quot; /&gt;
+        
+    &lt;/Output_file&gt;
+
+    &lt;xsl:template&gt;
+        a record in XML form
+            incorporating logic where required
+    &lt;/xsl:template&gt;
+
+&lt;/stylesheet&gt;
+</code></pre>
+<hr />
+<h1 id="csv-import-file">CSV import file</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;stylesheet&gt;</span>
+   
+    <span class="kw">&lt;Output_file&gt;</span> is a text file 
+
+           &quot;irn&quot;, &quot;import_field1&quot;, &quot;import_field2&quot; [...] 
+        
+        <span class="kw">&lt;xsl:apply-templates</span><span class="ot"> select=</span><span class="st">&quot;/table/tuple&quot;</span> <span class="kw">/&gt;</span>
+        
+    <span class="kw">&lt;/Output_file&gt;</span>
+
+    <span class="kw">&lt;xsl:template</span><span class="ot"> match</span> <span class="ot">=</span><span class="st">&quot;/table/tuple&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;xsl:if</span><span class="ot"> test=</span><span class="st">&quot;comparison of two fields&quot;</span><span class="kw">&gt;</span>
+           irn, import_field1, import_field2 [...] 
+        <span class="kw">&lt;/xsl:if&gt;</span>
+    <span class="kw">&lt;/xsl:template&gt;</span>
+
+<span class="kw">&lt;/stylesheet&gt;</span></code></pre>
+<hr />
+<h1 id="mapping-report">Mapping report</h1>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;stylesheet&gt;</span>
+    <span class="kw">&lt;Output_file&gt;</span> is a HTML file
+
+       <span class="kw">&lt;HTML&gt;</span>
+            <span class="kw">&lt;head&gt;</span>
+                calls to javascript libraries
+                <span class="kw">&lt;xsl:apply-templates</span><span class="ot"> match=</span><span class="st">&quot;/table/tuple&quot;</span> <span class="kw">/&gt;</span>
+                styles
+            <span class="kw">&lt;/head&gt;</span>
+            <span class="kw">&lt;body&gt;</span>
+                SA Museum etc
+                Placeholder for map
+                Placeholder for data table
+        <span class="kw">&lt;/HTML&gt;</span>
+
+    <span class="kw">&lt;/Output_file&gt;</span>
+
+    <span class="kw">&lt;xsl:template&gt;</span>
+        record as JSON 
+    <span class="kw">&lt;/xsl:template&gt;</span>
+
+<span class="kw">&lt;/stylesheet&gt;</span></code></pre>
+</body>
+</html>
