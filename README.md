@@ -61,7 +61,7 @@ To save the result to a file
 
 #### To use xsltproc
 
-Install xsltproc (it's not listed explicitly in the repositories, you get it by installing libxml2 and libxslt) then run
+Install xsltproc (it's not listed explicitly in the cygwin repositories, you get it by installing libxml2 and libxslt) then run
 
     $ xsltproc [The xslt file name] [the xml file name]
 
