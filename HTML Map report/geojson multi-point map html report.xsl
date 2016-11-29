@@ -1,15 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:emu="http://kesoftware.com/emu">
-<xsl:output method="html" encoding="ISO-8859-1" />
+<xsl:output method="html" encoding="UTF-8" />
+
+<!--
+This transform, when applied to an EMu XML file containing coordinates, produces a HTML page containing a zoomable map and a list of the record in
+the file
+
+The HTML file uses the d3, leaflet and leafletmarkercluster javascript libraries.
+-->
 
 <xsl:template match="/">
     <html>
         <head>
-            <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"/>
+            <script src="https://unpkg.com/leaflet/dist/leaflet.js"/>
             <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"/>
-            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css"/>
-            <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css"/>
-            <script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster.js"/>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+            <link rel="stylesheet"  src="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
+            <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"/>
             <xsl:call-template name="styles"/>
             <xsl:call-template name="scripts"/>
             <link rel="shortcut icon"
@@ -57,7 +64,7 @@
             }
 
             #footer
-            {                 
+            {
             font-family: "Freight Sans","Lato",Arial,sans-serif;
             font-style: normal;
             font-weight: normal;
@@ -125,7 +132,7 @@
             tbody tr:hover td
             {
             color: #000;
-            background-color: #E0E0E0  
+            background-color: #E0E0E0
             }
 
             #images {
@@ -140,9 +147,9 @@
 
             <!--
       map styles for Leaflet
- -->        
+ -->
 
-            #map { 
+            #map {
             align:center;
             vertical-align: middle;
             height: 600px;
@@ -152,7 +159,7 @@
 
             <!--
       map styles for Leaflet MarkerCluster
- -->             
+ -->
             .marker-cluster-small div {
             background-color: rgba(110, 204, 57, 0.9);
             }
@@ -207,8 +214,12 @@
 <xsl:template name="scripts">
 
    <script type="text/javascript">
-
+<!--
+applies the "/table/tuple" template below to transform the EMu XML into geojson
+in a variable called datapointsjson
+      -->
    <xsl:text>
+
                 var datapointsjson = { "type": "FeatureCollection",
                 "features": [</xsl:text>
 
@@ -218,80 +229,90 @@
 
 
     <script type="text/javascript">
+        function contains(a, obj) {
+            var i = a.length;
+            while (i--) {
+               if (a[i] === obj) {
+                   return true;
+               }
+            }
+            return false;
+        }
         function drawMapAndTable()
         {
-        var map = new L.map('map');
+        var map = new L.map('map'); // new blank leaflet map
 
         var markers = L.markerClusterGroup({maxClusterRadius: 30,
-        singleMarkerMode: true});
+        singleMarkerMode: true}); // new blank set of marker clusters
 
+        /* A Leaflet layer containing each of the points in datapointsjson
+        Each of the points gets a line added to its caption for each bit
+        of data.
+        */
+
+        var mapLayerGroups = [];
+        var categories = [];
+        var geojsonMarkerOptions = {
+                    radius: 2,
+                    fillColor: "#ff7800",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
         var myLayer = L.geoJson(datapointsjson,{onEachFeature: function (feature, layer) {
                                 var caption = feature.properties.Regno+"<br />" + "I.D: "+feature.properties.Taxon+"<br />";
-
                                 if(feature.properties.TypeStatus){
                                     caption += feature.properties.TypeStatus + "<br />";
                                 }
-                                
                                 if(feature.properties.Sitecode){
                                     caption += "Site code: " + feature.properties.Sitecode + "<br />";
                                 }
-
                                 if(feature.properties.NearestNamedPlace){
                                     caption += "Nearest named place: " +feature.properties.NearestNamedPlace+"<br />";
                                 }
-
                                 if(feature.properties.PreciseLocation){
                                     caption += "Precise location: " +feature.properties.PreciseLocation+"<br />";
                                 }
-
                                 caption += "Coordinates: "+feature.geometry.coordinates+"<br />";
-
                                 layer.bindPopup(caption
                                 );
+
+                                //does layerGroup already exist? if not create it and add to map
+                                var lg = mapLayerGroups[feature.properties.Taxon];
+
+                                if (lg === undefined) {
+                                    lg = new L.geoJson();
+
+                                    //store layer
+                                    mapLayerGroups[feature.properties.Taxon] = lg;
+
+                                }
+
+                                //add the feature to the layer
+                                lg.addLayer(layer);
+
                                 }
                             }
                         );
 
+        //add the markers for every specimen
 
+        L.geoJSON(datapointsjson, {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+                    }
+                }).addTo(map);
+
+        /*
+        getting a bounding box around the points and creating the map to be
+        larger than that by 10 pixels
+        */
 
         var bounds = myLayer.getBounds();
         map.fitBounds(bounds, {padding:[10,10]});
 
-        var svg = d3.select(map.getPanes().overlayPane).append("svg");
-
-        var g = svg.append("g").attr("class", "leaflet-zoom-hide");
-
-        function project(x) {
-        var point = map.latLngToLayerPoint(new L.LatLng(x[1], x[0]));
-        return [point.x, point.y];
-        }
-
-        var path = d3.geo.path().projection(project)
-        .pointRadius(2.5);
-
-        var feature = g.selectAll("path")
-        .data(datapointsjson.features)
-        .enter().append("path");
-
-        map.on("viewreset", reset);
-        
-        reset();
-
-        function reset() {
-        var bounds = path.bounds(datapointsjson),
-        topLeft = bounds[0],
-        bottomRight = bounds[1];
-
-        svg.attr("width", bottomRight[0] - topLeft[0])
-            .attr("height", bottomRight[1] - topLeft[1])
-            .style("margin-left", topLeft[0] + "px")
-            .style("margin-top", topLeft[1] + "px");
-
-        g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-
-        feature.attr("d", path);
-        }
-
+        // Defining the different base maps
         var OpenStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Tiles &#169; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
         var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -318,15 +339,36 @@
         "ESRI Gray Canvas": Esri_WorldGrayCanvas,
         }
 
+        // defining the different overlays
         var IBRA_bioregions = L.tileLayer.wms('http://spatial-dev.ala.org.au/geoserver/wms?SERVICE=WMS&amp;', {layers: 'ibra7_regions', format: 'image/png', attribution: '', opacity: '0.25'});
 
         var IBRA_biosubregions = L.tileLayer.wms('http://spatial-dev.ala.org.au/geoserver/wms?SERVICE=WMS&amp;', {layers: 'ibra7_subregions', format: 'image/png', attribution: '', opacity: '0.25'});
 
+        // from http://stackoverflow.com/questions/2454295
+
+        function collect() {
+          var ret = {};
+          var len = arguments.length;
+          for (var i=0; i&lt;len; i++) {
+            for (p in arguments[i]) {
+              if (arguments[i].hasOwnProperty(p)) {
+                ret[p] = arguments[i][p];
+              }
+            }
+          }
+          return ret;
+        }
+
         var clusters = markers.addLayer(myLayer);
 
-        var overlays = {"Clustered Markers": clusters,
+        var overlays_a = {"Clustered Markers": clusters,
              "IBRA Bioregions": IBRA_bioregions,
              "IBRA Subregions": IBRA_biosubregions };
+
+        var overlays_b = mapLayerGroups;
+
+        overlays = collect(overlays_a, overlays_b);
+
 
         L.control.layers(baseMaps, overlays).addTo(map);
         L.control.scale({imperial: false}).addTo(map);
@@ -369,13 +411,13 @@
         .append("tr");
 
         var td = tr.selectAll("td")
-        .data(function(row) {            
-        return headers.map(function(d) { 
+        .data(function(row) {
+        return headers.map(function(d) {
         return {column: d, value: row.properties[d]};
         });
         });
 
-        tr.selectAll("tbody") 
+        tr.selectAll("tbody")
 
         td.enter()
         .append("td")
@@ -398,13 +440,16 @@
         <xsl:variable name="typestatus"
             select="table[@name = 'Group2']//atom[@name = 'CitTypeStatus']"/>
         <xsl:variable name="typestatusdetails"
-            select="concat(table[@name = 'Group2']//atom[@name = 'CitTypeStatus'], ': ', table[@name = 'Group2']//atom[@name = 'ClaGenus'], ' ', table[@name = 'Group2']//atom[@name = 'ClaSpecies'], ' ', table[@name = 'Group2']//atom[@name = 'CitSubspecies'])"/>
+            select="concat(table[@name = 'Group2']//atom[@name = 'CitTypeStatus'], ' of ', table[@name = 'Group2']//atom[@name = 'ClaGenus'], ' ', table[@name = 'Group2']//atom[@name = 'ClaSpecies'], ' ', table[@name = 'Group2']//atom[@name = 'CitSubspecies'])"/>
         <xsl:variable name="taxon"
-            select="translate(table//atom[@name='IdeQualifiedName'], '&quot;', '')"/>
-        <!-- Getting the location information from the source specimen if the record has one (i.e. it's a tissue sample) -->
+            select="table//atom[@name='IdeQualifiedName']"/>
+        <!-- Getting the location information
+            If the record is a tissue sample (i.e. has a source specimen recorded)
+            the location is taken from that entry
+        -->
         <xsl:variable name="long">
             <xsl:choose>
-                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*">
+                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*[text()]">
                     <xsl:value-of select="tuple[@name = 'SouVoucherHeldRef']//atom[@name = 'LatLongitudeDecimal']" />
                 </xsl:when>
                 <xsl:otherwise>
@@ -414,7 +459,7 @@
         </xsl:variable>
         <xsl:variable name="lat">
             <xsl:choose>
-                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*">
+                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*[text()]">
                     <xsl:value-of select="tuple[@name = 'SouVoucherHeldRef']//atom[@name = 'LatLatitudeDecimal']"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -424,7 +469,7 @@
         </xsl:variable>
         <xsl:variable name="sitecode">
             <xsl:choose>
-                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*">
+                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*[text()]">
                     <xsl:value-of select="tuple[@name='SouVoucherHeldRef']//atom[@name='ColCollectionEventCode']"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -434,21 +479,21 @@
         </xsl:variable>
         <xsl:variable name="nearestnamed">
             <xsl:choose>
-                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*">
-                    <xsl:value-of select="translate(tuple[@name='SouVoucherHeldRef']//atom[@name='LocNearestNamedPlace'], '&quot;', '')"/>
+                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*[text()]">
+                    <xsl:value-of select="tuple[@name='SouVoucherHeldRef']//atom[@name='LocNearestNamedPlace']"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="translate(tuple[@name='BioEventRef']/atom[@name = 'LocNearestNamedPlace'], '&quot;', ' ')"/>
+                    <xsl:value-of select="tuple[@name='BioEventRef']/atom[@name = 'LocNearestNamedPlace']"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="preciselocation">
             <xsl:choose>
-                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*">
-                    <xsl:value-of select="translate(tuple[@name='SouVoucherHeldRef']//atom[@name='LocPreciseLocation'], '&quot;', '')"/>
+                <xsl:when test="tuple[@name = 'SouVoucherHeldRef']/*[text()]">
+                    <xsl:value-of select="tuple[@name='SouVoucherHeldRef']//atom[@name='LocPreciseLocation']"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="translate(tuple[@name='BioEventRef']/atom[@name = 'LocPreciseLocation'], '&quot;', ' ')"/>
+                    <xsl:value-of select="tuple[@name='BioEventRef']/atom[@name = 'LocPreciseLocation']"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -473,7 +518,10 @@
         <xsl:value-of select="$regno"/>
         <xsl:text>",
                       "Taxon": "</xsl:text>
-        <xsl:value-of select="$taxon"/>
+        <xsl:call-template name="escapeQuote">
+            <xsl:with-param name="pText" select ="$taxon" />
+        </xsl:call-template>
+
         <xsl:if test="$typestatus ">
             <xsl:text>",
                       "TypeStatus": "</xsl:text>
@@ -481,13 +529,21 @@
         </xsl:if>
         <xsl:text>",
                       "Sitecode": "</xsl:text>
-        <xsl:value-of select="$sitecode"/>
+        <xsl:call-template name="escapeQuote">
+            <xsl:with-param name="pText" select ="$sitecode" />
+        </xsl:call-template>
+
         <xsl:text>",
                       "NearestNamedPlace": "</xsl:text>
-        <xsl:value-of select="$nearestnamed"/>
+        <xsl:call-template name="escapeQuote">
+            <xsl:with-param name="pText" select ="$nearestnamed" />
+        </xsl:call-template>
         <xsl:text>",
                       "PreciseLocation": "</xsl:text>
-        <xsl:value-of select="$preciselocation"/>
+        <xsl:call-template name="escapeQuote">
+            <xsl:with-param name="pText" select ="$preciselocation" />
+        </xsl:call-template>
+
         <xsl:text>",
                       "Latitude": "</xsl:text>
         <xsl:value-of select="$lat"/>
@@ -501,5 +557,24 @@
         <xsl:if test="position() != last()">, </xsl:if>
     </xsl:template>
 
-</xsl:stylesheet>
+    <xsl:template name="escapeQuote">
+        <!-- escaping double quotes in the json
+             otherwise locations with double quotes cause the map to fail -->
+        <xsl:param name="pText" select="."/>
 
+        <xsl:if test="string-length($pText) >0">
+            <xsl:value-of select=
+                "substring-before(concat($pText, '&quot;'), '&quot;')"/>
+
+            <xsl:if test="contains($pText, '&quot;')">
+                <xsl:text>\"</xsl:text>
+
+                <xsl:call-template name="escapeQuote">
+                    <xsl:with-param name="pText" select=
+                        "substring-after($pText, '&quot;')"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+
+</xsl:stylesheet>
