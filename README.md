@@ -39,13 +39,32 @@ or
 
 ### using the windows command prompt
 
-You should use [cygwin](https://www.cygwin.com/).
+You should use [cygwin](https://www.cygwin.com/) or [Bash on Ubuntu on Windows](https://msdn.microsoft.com/commandline/wsl/install_guide). Bash on Ubuntu on Windows is more convenient but won't allow you to use the default xslt processor that comes with EMu.
 
-If you're *not* using cygwin then from a command prompt run 
+If you're *not* using cygwin or Bash then from a command prompt run 
 
     "c:\Program Files (x86)\KESoftware\[Whatever your EMu installation is called]\xslt.exe" [The xslt file name] [the xml file name]
 
 The output file will automatically open in the appropriate program. I was unable to work out how to save the output into a file 
+
+### using bash on windows
+
+The default processor won't work with bash so you need to use xsltproc
+
+#### using xsltproc
+
+install xsltproc
+
+  sudo apt-get update && sudo apt-get install xsltproc
+  
+    $ xsltproc [The xslt file name] [the xml file name]
+
+To get the output to automatically open in the appropriate program or 
+
+    $ xsltproc [The xslt file name] [the xml file name] > [temporary file name.extension]
+
+To save the result to a file
+
 
 ### using cygwin
 
