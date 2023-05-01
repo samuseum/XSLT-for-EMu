@@ -7,38 +7,38 @@ September 2015
 
 ## Excel report with choices
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/excel report with tissues.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/excel%20report%20with%20tissues.PNG)
 
 
 ## Excel report with data manipulation
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/arachnology label report.PNG)
-
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/arachnology%20label%20report.PNG)
+/images/arachnology%20label%20report.PNG
 
 
 ## CSV import report
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/csv import report.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/csv%20import%20report.PNG)
 
 
 ## page view with map
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/page view with map.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/page%20view%20with%20map.PNG)
 
 
 ## kml report
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/kml report.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/kml%20report.PNG)
 
 
 ## species occurrence report
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/species occurrence report.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/species%20occurrence%20report.PNG)
 
 
 ## zoomable map with overlays
 
-![](https://raw.githubusercontent.com/keithmaguire/XSLT-for-EMu/master/talk/images/multi point map report.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/multi%20point map%20report.PNG)
 
 
 ## XSLT
