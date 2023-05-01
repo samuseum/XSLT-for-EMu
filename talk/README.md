@@ -7,13 +7,10 @@ September 2015
 
 ## Excel report with choices
 
+Getting data from different fields depending on the values in a particular field. Here getting the values from different fields for vouchered and un-vouchered tissues:
+
 ![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/excel%20report%20with%20tissues.PNG)
 
-
-## Excel report with data manipulation
-
-![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/arachnology%20label%20report.PNG)
-/images/arachnology%20label%20report.PNG
 
 
 ## CSV import report
@@ -38,7 +35,7 @@ September 2015
 
 ## zoomable map with overlays
 
-![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/multi%20point map%20report.PNG)
+![](https://github.com/samuseum/XSLT-for-EMu/raw/master/talk/images/multi%20point%20map%20report.PNG)
 
 
 ## XSLT
@@ -296,7 +293,7 @@ output = filename.kml
 
 ## kml report
 
-![](images\kml report.PNG)
+![](images\kml%20report.PNG)
 
 
 ## Excel XML
@@ -368,10 +365,6 @@ Speadsheet ML
 </template>
 ~~~~~~~~~~~~~~~~~~~~~~
 
-## Excel report with data manipulation
-
-![](images\arachnology label report.PNG)
-
 
 
 ## HTML files
@@ -380,7 +373,7 @@ Speadsheet ML
 
 ## Default Page view 
 
-![default page view](images\default page view.PNG)
+![default page view](images\default%20page%20view.PNG)
 
 
 
@@ -411,7 +404,7 @@ Speadsheet ML
 
 ## Page view with map
 
-![page view with map](images\page view with map.PNG)
+![page view with map](images\page%20view%20with%20map.PNG)
 
 
 
@@ -466,7 +459,7 @@ Speadsheet ML
 
 ## species occurrence report
 
-![](images\species occurrence report.PNG)
+![](images\species%20occurrence%20report.PNG)
 
 ## WMS and Leaflet
 
@@ -502,7 +495,7 @@ WMS = base maps & overlays
 
 ## zoomable map with overlays
 
-![](images\multi point map report.PNG)
+![](images\multi%20point%20map%20report.PNG)
 
 
 
@@ -513,14 +506,12 @@ WMS = base maps & overlays
 + xslt processor
     + xsltproc / lxml / oXygen
 + shell
-    + Command Prompt / cygwin
+    + Windows Linux Subsystem / Command Prompt / cygwin
 
-## Examples
 
-(in a few days)
 
 
 keith.maguire@samuseum.sa.gov.au
 
-https://github.com/keithmaguire
+https://github.com/samuseum
 
