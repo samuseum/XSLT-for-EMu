@@ -1,9 +1,10 @@
 # XSLT-for-EMu
 XSLT reports for KE EMu
 
-This is a selection of XSLT reports for KE EMu
+This is a selection of XSLT reports for KE EMu, created to provide background for a talk given at an axiell meeting in 2015. Context and explanation for the reports can be found in the [notes from that talk](https://github.com/samuseum/XSLT-for-EMu/tree/master/talk).
 
-Any improvements would be gratefully received.
+Update in 2025: These are rather old so any javascript libraries will be hopelessly out of date but the general principles will still work. If doing this now I would omit the excel reports and include how useful it can be to create a quick html table report as you can usually copy-and-paste from them into excel.
+For excel or csv reports the method in this repo should still work in theory but we use a different, much easier to use (once set up), [filter to generate excel reports](https://github.com/samuseum/emu-reports-yaml).
 
 ## To run the reports from EMu
 
